@@ -28,11 +28,13 @@ endif()
 
 if(CUDA_FOUND)
   set(HAVE_CUDA 1)
-  if(CUDA_VERSION VERSION_GREATER_EQUAL "11.3")
-    # CUDA 11.3 removes nppicom
-    ocv_list_filterout(CUDA_nppi_LIBRARY "nppicom")
-    ocv_list_filterout(CUDA_npp_LIBRARY "nppicom")
-  endif()
+  ocv_list_filterout(CUDA_nppi_LIBRARY "nppicom")
+  ocv_list_filterout(CUDA_npp_LIBRARY "nppicom")
+  # if(CUDA_VERSION VERSION_GREATER_EQUAL "11.3")
+  #   # CUDA 11.3 removes nppicom
+  #   ocv_list_filterout(CUDA_nppi_LIBRARY "nppicom")
+  #   ocv_list_filterout(CUDA_npp_LIBRARY "nppicom")
+  # endif()
 
   if(WITH_CUFFT)
     set(HAVE_CUFFT 1)
