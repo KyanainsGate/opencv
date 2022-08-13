@@ -199,6 +199,10 @@ if(CUDA_FOUND)
   set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} ${NVCC_FLAGS_EXTRA})
   set(OpenCV_CUDA_CC "${NVCC_FLAGS_EXTRA}")
 
+  # Force override to avoid `compute_30` build
+  set(OPENCV_CUDA_ARCH_BIN "50 52 60 61 70 75")
+  set(NVCC_FLAGS_EXTRA "-gencode arch=compute_50,code=sm_50 -gencode arch=compute_52,code=sm_52 -gencode arch=compute_60,code=sm_60 -gencode arch=compute_61,code=sm_61 -gencode arch=compute_70,code=sm_70 -gencode arch=compute_75,code=sm_75 -D_FORCE_INLINES")
+
   if(ANDROID)
     set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} "-Xptxas;-dlcm=ca")
   endif()
