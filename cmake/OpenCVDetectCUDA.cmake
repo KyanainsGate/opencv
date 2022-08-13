@@ -19,6 +19,13 @@ list(REMOVE_AT CMAKE_MODULE_PATH 0)
 
 if(CUDA_FOUND)
   set(HAVE_CUDA 1)
+  # https://github.com/opencv/opencv/pull/17499/files
+  if(CUDA_VERSION VERSION_GREATER_EQUAL "11.3")
+    # CUDA 11.3 removes nppicom
+    ocv_list_filterout(CUDA_nppi_LIBRARY "nppicom")
+    ocv_list_filterout(CUDA_npp_LIBRARY "nppicom")
+  endif()
+
 
   if(WITH_CUFFT)
     set(HAVE_CUFFT 1)
