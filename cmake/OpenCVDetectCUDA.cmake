@@ -172,6 +172,11 @@ if(CUDA_FOUND)
 
   # Tell NVCC to add binaries for the specified GPUs
   string(REGEX MATCHALL "[0-9()]+" ARCH_LIST "${ARCH_BIN_NO_POINTS}")
+  status("================================================")
+  status("Force override of ARCH_LIST")
+  set(ARCH_LIST "50 52 60 61 70 75")
+  status("ARCH_LIST ==>> " ${ARCH_LIST})
+  status("================================================")
   foreach(ARCH IN LISTS ARCH_LIST)
     if(ARCH MATCHES "([0-9]+)\\(([0-9]+)\\)")
       # User explicitly specified PTX for the concrete BIN
@@ -198,10 +203,6 @@ if(CUDA_FOUND)
   # These vars will be processed in other scripts
   set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} ${NVCC_FLAGS_EXTRA})
   set(OpenCV_CUDA_CC "${NVCC_FLAGS_EXTRA}")
-
-  # Force override to avoid `compute_30` build
-  set(OPENCV_CUDA_ARCH_BIN "50 52 60 61 70 75")
-  set(NVCC_FLAGS_EXTRA "-gencode arch=compute_50,code=sm_50 -gencode arch=compute_52,code=sm_52 -gencode arch=compute_60,code=sm_60 -gencode arch=compute_61,code=sm_61 -gencode arch=compute_70,code=sm_70 -gencode arch=compute_75,code=sm_75 -D_FORCE_INLINES")
 
   if(ANDROID)
     set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} "-Xptxas;-dlcm=ca")
